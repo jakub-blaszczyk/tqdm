@@ -691,7 +691,7 @@ class tqdm(Comparable):
                  miniters=None, ascii=None, disable=False, unit='it',
                  unit_scale=False, dynamic_ncols=False, smoothing=0.3,
                  bar_format=None, initial=0, position=None, postfix=None,
-                 unit_divisor=1000, gui=False, **kwargs):
+                 unit_divisor=1000, gui=False, color=None, **kwargs):
         """
         Parameters
         ----------
@@ -784,6 +784,9 @@ class tqdm(Comparable):
             WARNING: internal parameter - do not use.
             Use tqdm_gui(...) instead. If set, will attempt to use
             matplotlib animations for a graphical output [default: False].
+        color  : string, optional
+            REMARK: usefull only in tqdm_notebook.
+            Change text color for stats
 
         Returns
         -------

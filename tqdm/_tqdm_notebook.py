@@ -86,7 +86,7 @@ class tqdm_notebook(tqdm):
     """
 
     @staticmethod
-    def status_printer(_, total=None, desc=None, ncols=None):
+    def status_printer(_, total=None, desc=None, ncols=None, color=None):
         """
         Manage the printing of an IPython/Jupyter Notebook progress bar widget.
         """
@@ -161,7 +161,10 @@ class tqdm_notebook(tqdm):
             if s:  # never clear the bar (signal: s='')
                 s = s.replace('||', '')  # remove inesthetical pipes
                 s = escape(s)  # html escape special characters (like '?')
-                ptext.value = s
+                if color is None:
+                    ptext.value = s
+                else:
+                    ptext.value = f'<span style="color: {color}">{s}</span>'
 
             # Change bar style
             if bar_style:
@@ -207,9 +210,12 @@ class tqdm_notebook(tqdm):
         # Get bar width
         self.ncols = '100%' if self.dynamic_ncols else kwargs.get("ncols", None)
 
+        # Get text color
+        self.color = kwargs.get("color", None)
+
         # Replace with IPython progress bar display (with correct total)
         self.sp = self.status_printer(
-            self.fp, self.total, self.desc, self.ncols)
+            self.fp, self.total, self.desc, self.ncols, self.color)
         self.desc = None  # trick to place description before the bar
 
         # Print initial bar state
